@@ -1,0 +1,5 @@
+sync.bat
+*.lock
+*.class
+*.txt
+*.bin

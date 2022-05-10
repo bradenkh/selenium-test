@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+
+    mavenCentral()
+    maven { name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/BSCProjects/tdapi")
+        credentials {
+            username = "BSCProjects"
+            password = System.getenv("BSC_GH_TOKEN")
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+    implementation 'au.com.dius.pact.provider:maven:4.3.5'
+    implementation group: 'junit', name: 'junit', version: '4.13.2'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.22.0'
+    implementation 'tdapi:tdapi:2.1.7'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.4'
+    testImplementation('org.springframework.boot:spring-boot-starter-test:2.6.4') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:2.6.4'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.0.0'
+
+}
