@@ -49,7 +49,7 @@ public class SeleniumTestController {
             }
             driver.switchTo().window(originalWindow);
             driver.findElement(By.linkText("»")).click();
-//        }
+        }
 
         return "200 ok";
     }
