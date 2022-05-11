@@ -18,8 +18,10 @@ public class SeleniumTestController {
 
     @GetMapping(value = "/")
     public String testController() throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver","C:/Users/bradenkh/Downloads/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","C:/Users/brade/Downloads/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
+
+        StringBuilder response = new StringBuilder("[");
 
         driver.get("https://td.byui.edu/TDClient/87/Portal/Questions");
         String originalWindow = driver.getWindowHandle();
@@ -27,7 +29,9 @@ public class SeleniumTestController {
         for (int page = 0; page < 10; page++) {
             for (int i = 2; i < 27; i++) {
                 String selectLinkOpeninNewTab = Keys.chord(Keys.CONTROL, Keys.RETURN);
-                driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div/div[2]/div[1]/div["+i+"]/h3/a")).sendKeys(selectLinkOpeninNewTab);
+                if (!driver.findElements(By.xpath("/html/body/main/div/div[2]/div[2]/div/div[2]/div[1]/div["+i+"]/h3/a")).isEmpty()) {
+                    driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div/div[2]/div[1]/div[" + i + "]/h3/a")).sendKeys(selectLinkOpeninNewTab);
+                }
             }
 
             Set<String> windows = driver.getWindowHandles();
@@ -37,20 +41,33 @@ public class SeleniumTestController {
                 driver.switchTo().window(window);
                 new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/main/div/div[2]/div[2]/div[2]/div/ol/li[2]/a")));
                 Question tempQuestion = new Question();
-                tempQuestion.title = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[3]/div/h1")).getText();
-                tempQuestion.text = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[1]/p")).getText();
-                tempQuestion.asker = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[3]")).getText();
-                tempQuestion.answer = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[5]/div/div[2]/p")).getText();
-                tempQuestion.feedback = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[5]/div/div[3]/span")).getText();
-                tempQuestion.category = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[2]/div/ol/li[2]/a")).getText();
+                if (!driver.findElements(By.xpath("/html/body/main/div/div[2]/div[2]/div[3]/div/h1")).isEmpty()) {
+                    tempQuestion.title = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[3]/div/h1")).getText();
+                }
+                if (!driver.findElements(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[1]/p")).isEmpty()) {
+                    tempQuestion.text = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[1]/p")).getText();
+                }
+                if (!driver.findElements(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[3]")).isEmpty()) {
+                    tempQuestion.asker = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[3]")).getText();
+                }
+                if (!driver.findElements(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[5]/div/div[2]/p")).isEmpty()) {
+                    tempQuestion.answer = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[5]/div/div[2]/p")).getText();
+                }
+                if (!driver.findElements(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[5]/div/div[3]/span")).isEmpty()) {
+                    tempQuestion.feedback = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[4]/div[1]/div[5]/div/div[3]/span")).getText();
+                }
+                if (!driver.findElements(By.xpath("/html/body/main/div/div[2]/div[2]/div[2]/div/ol/li[2]/a")).isEmpty()) {
+                    tempQuestion.category = driver.findElement(By.xpath("/html/body/main/div/div[2]/div[2]/div[2]/div/ol/li[2]/a")).getText();
+                }
 
                 System.out.println(tempQuestion);
+                response.append(tempQuestion).append(",");
                 driver.close();
             }
             driver.switchTo().window(originalWindow);
             driver.findElement(By.linkText("»")).click();
         }
 
-        return "200 ok";
+        return response.toString();
     }
 }

@@ -11,12 +11,14 @@ public class Question {
 
     @Override
     public String toString() {
-        return  "\"" + title + "\"," +
-                "\"" +  text + "\"," +
-                "\"" +  answer + "\"," +
-                "\"" +  asker + "\"," +
-                "\"" +  askDate + "\"," +
-                "\"" +  feedback + "\"," +
-                "\"" +  category + "\",";
+        return "{" +
+                "\"title\":\"" + title + '\"' +
+                ", \"text\":\"" + text + '\"' +
+                ", \"answer\":\"" + answer + '\"' +
+                ", \"asker\":\"" + asker + '\"' +
+                ", \"askDate\":\"" + askDate + '\"' +
+                ", \"feedback\":\"" + feedback + '\"' +
+                ", \"category\":\"" + category + '\"' +
+                '}';
     }
 }
