@@ -11,6 +11,12 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 
 public class TdApiUtils {
+    Map<String,String> appIds;
+
+    public TdApiUtils() {
+        appIds = getAppIds();
+    }
+
     public ArrayList<Map<String, String>> getIDsFromReport(TeamDynamix td, int reportID) {
         Report report;
         try {
@@ -21,7 +27,9 @@ public class TdApiUtils {
         return new ArrayList<>(report.getDataRows());
     }
 
-    public Map<String, String> getAppIds() {
+
+
+    private Map<String, String> getAppIds() {
         Map<String,String> ids = new HashMap<>();
         ids.put("(Advertising and Marketing)", "38");
         ids.put("(BSC) Employment", "30");
@@ -115,9 +123,10 @@ public class TdApiUtils {
         ids.put("University Store", "102");
         ids.put("University Store Cellular", "49");
         ids.put("Workspaces", "26");
-
         return ids;
     }
 
-    public String
+    public String getAppId(String appName) {
+        return appIds.get(appName);
+    }
 }

@@ -31,7 +31,7 @@ public class Main {
         TdApiUtils apiUtils = new TdApiUtils();
         ArrayList<Map<String,String>> tickets = apiUtils.getIDsFromReport(tdApi, 21061);
         for (Map<String, String> ticket : tickets) {
-            webUtils.deleteTicket(ticket.get("TicketID"), );
+            webUtils.deleteTicket(ticket.get("TicketID"), apiUtils.getAppId(ticket.get("AppName")), driver);
         }
 
 

@@ -4,6 +4,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class TdWebDriverUtils {
     public void loginToTD(WebDriver driver) {
         try {
@@ -17,5 +19,13 @@ public class TdWebDriverUtils {
             e.printStackTrace();
         }
 
+    }
+
+    public void deleteTicket(String ticketId, String appId, WebDriver driver) {
+        String url = "https://td.byui.edu/TDAdmin/fcb76cab-d63e-41d6-a1f0-34c67299d6bf/" + appId + "/Tickets/TicketDet.aspx?TicketID=" + ticketId;
+        driver.get(url);
+        driver.manage().window().setSize(new Dimension(968, 1020));
+        driver.findElement(By.id("btnDelete")).click();
+        driver.switchTo().alert().accept();
     }
 }
