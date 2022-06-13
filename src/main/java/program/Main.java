@@ -33,7 +33,7 @@ public class Main {
         for (Map<String, String> ticket : tickets) {
             webUtils.deleteTicket(ticket.get("TicketID"), apiUtils.getAppId(ticket.get("AppName")), driver);
         }
-
+        driver.quit();
 
     }
 
