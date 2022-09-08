@@ -27,5 +27,6 @@ public class TdWebDriverUtils {
         driver.manage().window().setSize(new Dimension(968, 1020));
         driver.findElement(By.id("btnDelete")).click();
         driver.switchTo().alert().accept();
+        System.out.println("Ticket " + ticketId + " deleted from " + appId);
     }
 }

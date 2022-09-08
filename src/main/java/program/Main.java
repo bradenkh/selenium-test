@@ -2,6 +2,7 @@ package program;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -14,6 +15,7 @@ import td.api.TeamDynamix;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
 
 @SpringBootApplication
 public class Main {
@@ -23,13 +25,29 @@ public class Main {
         TeamDynamix tdApi = new TeamDynamix(System.getenv("TD_API_BASE_URL"), System.getenv("USERNAME"), System.getenv("PASSWORD"), history);
 
         System.setProperty("webdriver.chrome.driver","C:/Users/bradenkh/Downloads/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(false);
+        WebDriver driver = new ChromeDriver(options);
+
 
         TdWebDriverUtils webUtils = new TdWebDriverUtils();
         webUtils.loginToTD(driver);
 
         TdApiUtils apiUtils = new TdApiUtils();
-        ArrayList<Map<String,String>> tickets = apiUtils.getIDsFromReport(tdApi, 21061);
+        //prompt user for report id
+        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter a report id: ");
+        String reportId = myObj.nextLine();  // Read user input
+
+        //check if string is a number
+        try {
+            Integer.parseInt(reportId);
+        } catch (NumberFormatException e) {
+            System.out.println("Report id is not a number");
+            System.exit(0);
+        }
+
+        ArrayList<Map<String,String>> tickets = apiUtils.getIDsFromReport(tdApi, Integer.parseInt(reportId));
         for (Map<String, String> ticket : tickets) {
             webUtils.deleteTicket(ticket.get("TicketID"), apiUtils.getAppId(ticket.get("AppName")), driver);
         }
