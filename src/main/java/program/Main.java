@@ -24,11 +24,8 @@ public class Main {
         History history = new History(ResourceType.APPLICATION, "Ticket deleter");
         TeamDynamix tdApi = new TeamDynamix(System.getenv("TD_API_BASE_URL"), System.getenv("USERNAME"), System.getenv("PASSWORD"), history);
 
-        System.setProperty("webdriver.chrome.driver","C:/Users/bradenkh/Downloads/chromedriver.exe");
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(false);
-        WebDriver driver = new ChromeDriver(options);
-
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
 
         TdWebDriverUtils webUtils = new TdWebDriverUtils();
         webUtils.loginToTD(driver);

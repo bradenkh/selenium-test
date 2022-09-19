@@ -29,8 +29,8 @@ dependencies {
     implementation group: 'junit', name: 'junit', version: '4.13.2'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.22.0'
-    implementation 'tdapi:tdapi:2.1.7'
-
+    implementation 'tdapi:tdapi:2.1.8'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.3.0'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.6.4'
     testImplementation('org.springframework.boot:spring-boot-starter-test:2.6.4') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
