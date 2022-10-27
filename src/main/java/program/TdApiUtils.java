@@ -1,13 +1,11 @@
 package program;
 
-import jdk.javadoc.doclet.Reporter;
 import td.api.Exceptions.TDException;
 import td.api.Reports.Report;
 import td.api.TeamDynamix;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.Map;
 
 public class TdApiUtils {
